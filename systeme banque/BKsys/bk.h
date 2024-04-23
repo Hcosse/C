@@ -21,13 +21,7 @@ typedef struct info_perso
     int age;
 } info_p;
 
-/** STRUCTURE POUR LA DATE **/
-typedef struct date
-{
-    int jour;
-    int mois;
-    int annee;
-} date;
+
 
 /** STRUCTURE POUR INFORMATIONS SENSIBLES **/
 typedef struct info_sensible
@@ -37,20 +31,13 @@ typedef struct info_sensible
     double solde;
 } info_s;
 
-/** STRUCTURE POUR CREATION COMPTE **/
-typedef struct creation_compte_user
-{
-    info_p *perso;    // Pointeur vers les informations personnelles
-    info_s *sensible; // Pointeur vers les informations sensibles
-    date *dte;        // Pointeur vers les informations de date
-} cr_user;
 
 /** FONCTIONS POUR LA GESTION DU COMPTE BANCAIRE **/
 int menu_compte_user(int choix_user);
-void creation_compte(cr_user *user_data);
+int entree_valide(const char *name);
 void saisieInfoPerso(info_p *perso);
 void saisieInfoSensible(info_s *sensible);
-void date_creation_compte(date *dte);
+void sauvegarde_donnees(info_p *perso, info_s *sensible);
 
 /** FONCTIONS POUR LA PARTIE IDENTIFICATION **/
 int authentification(info_s *sensible);
