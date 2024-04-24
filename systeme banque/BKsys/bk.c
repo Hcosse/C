@@ -46,9 +46,9 @@ void sauvegarde_donnees(info_p *perso, info_s *sensible)
         exit(1);
     }
 
-    fprintf(fichier_banque_confidentiel,"Nom: %s , Prenom: %s , Age : %d , Identification :%s, MDP : %s , Solde : %lf ",perso->nom,perso->prenom,perso->age,sensible->id,sensible->mdp,sensible->solde);
+    fprintf(fichier_banque_confidentiel,"Nom: %s , Prenom: %s , Age : %d , Identification :%s, MDP : %s , Solde : %lf \n",perso->nom,perso->prenom,perso->age,sensible->id,sensible->mdp,sensible->solde);
 
-    fclose(fichier_banque_confidentiel);
+            fclose(fichier_banque_confidentiel);
 }
 
 
@@ -56,7 +56,7 @@ void sauvegarde_donnees(info_p *perso, info_s *sensible)
 
 void saisieInfoPerso(info_p *perso)
 {
-    printf("=== SAISIE INFORMATION SENSIBLE ===");
+    printf("=== SAISIE INFORMATION SENSIBLE ===\n");
     do
     {
         printf("NOM : ");
@@ -76,7 +76,6 @@ void saisieInfoPerso(info_p *perso)
     do
     {
         printf("AGE : ");
-        printf("\n");
         scanf("%d", &perso->age);
         while (getchar() != '\n'); // Nettoie le buffer pour supprimer le reste de la ligne
     }
@@ -90,7 +89,7 @@ void saisieInfoSensible(info_s *sensible)
     printf("!!!!!!!!!!! WARNING !!!!!!!!!!!");
     printf("\n");
     printf("\n");
-    printf("=== SAISIE INFORMATION SENSIBLE ===");
+    printf("=== SAISIE INFORMATION SENSIBLE ===\n");
     printf("\n");
     do
     {
