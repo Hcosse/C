@@ -1,35 +1,52 @@
 #include "bk.h"
 #include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 
-int main()
-{
+int main() {
     int choix;
+    bool authenticated = false; // indique si l'utilisateur est authentifié
+
+    // allocation dynamique de la mémoire
     info_p *perso = malloc(sizeof(info_p));
     info_s *sensible = malloc(sizeof(info_s));
 
-    if (!perso || !sensible)
-    {
+    if (!perso || !sensible) {
         fprintf(stderr, "Erreur d'allocation mémoire\n");
         exit(1);
     }
 
-    do
-    {
+    // boucle principale
+    do {
         printf("\n======= MENU BANQUE =======\n\n");
         printf("%d - AUTHENTIFICATION\n", AUTHENTIFICATION);
         printf("%d - CREATION DE COMPTE\n", CREATION_DE_COMPTE);
         printf("%d - QUITTER\n", QUITTER);
         printf("\nSaisie du choix : ");
         scanf("%d", &choix);
-        while (getchar() != '\n');
+        while (getchar() != '\n'); // Nettoyage du buffer
 
-        switch (choix)
-        {
+        switch (choix) {
         case AUTHENTIFICATION:
-            choix = menu_compte_user(choix);
+            authenticated = authentification(sensible);
+            if (authenticated) {
+                do {
+                    choix = menu_compte_user(choix);
+                    switch (choix) {
+                    case RETRAIT:
+                        break;
+                    case DEPOT:
+                        break;
+                    case CONSULTATION_DU_SOLDE:
+                        break;
+                    case QUITTER:
+                        break;
+                    default:
+                        printf("SAISIE INCORRECTE\n");
+                        break;
+                    }
+                } while (choix != QUITTER);
+            }
             break;
         case CREATION_DE_COMPTE:
             saisieInfoPerso(perso);
@@ -39,9 +56,9 @@ int main()
         case QUITTER:
             break;
         }
-    }
-    while (choix != QUITTER);
+    } while (choix != QUITTER);
 
+    // libération de la mémoire allouée
     free(perso);
     free(sensible);
 
