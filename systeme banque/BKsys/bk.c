@@ -30,7 +30,7 @@ int entree_valide(const char *name)
         }
         name++;
     }
-    return 1; //  caractères valides
+    return 1; // caractères valides
 }
 
 // Sauvegarde les données du compte dans un fichier en clair
@@ -73,10 +73,10 @@ void saisieInfoPerso(info_p *perso)
         scanf("%d", &perso->age);
         while (getchar() != '\n'); // nettoie le buffer
     }
-    while (perso->age < 18 || perso->age > 100);   // vérifie  l'âge
+    while (perso->age < 18 || perso->age > 100); // vérifie l'âge
 }
 
-// saisie les informations sensibles de l'utilisateur
+// Saisie les informations sensibles de l'utilisateur
 void saisieInfoSensible(info_s *sensible)
 {
     printf("!!!!!!!!!!! ATTENTION !!!!!!!!!!!\n");
@@ -114,7 +114,7 @@ void saisieInfoSensible(info_s *sensible)
     while (sensible->solde < 100);
 }
 
-// authentification de l'utilisateur
+// Authentification de l'utilisateur
 bool authentification(info_s *sensible)
 {
     char mdp_authentification[MAXCHARS];
@@ -154,4 +154,68 @@ bool authentification(info_s *sensible)
 
     fclose(fichier_banque_confidentiel);
     return false;
+}
+
+// Fonction de dépôt
+void depot_compte(info_s *sensible) {
+    double montant;
+    printf("Montant à déposer : ");
+    scanf("%lf", &montant);
+    while (getchar() != '\n'); // nettoyer le buffer
+
+    if (montant > 0) {
+        sensible->solde += montant;
+        printf("Dépôt réussi. Nouveau solde : %.2lf\n", sensible->solde);
+    } else {
+        printf("Montant invalide. Le dépôt a échoué.\n");
+    }
+}
+
+// Fonction de retrait
+void retrait_compte(info_s *sensible) {
+    double montant;
+    printf("Montant à retirer : ");
+    scanf("%lf", &montant);
+    while (getchar() != '\n'); // nettoyer le buffer
+
+    if (montant > 0 && montant <= sensible->solde) {
+        sensible->solde -= montant;
+        printf("Retrait réussi. Nouveau solde : %.2lf\n", sensible->solde);
+    } else {
+        printf("Montant invalide ou solde insuffisant. Le retrait a échoué.\n");
+    }
+}
+
+// Fonction de consultation du solde
+void consultation(info_s *sensible) {
+    printf("Votre solde actuel est : %.2lf\n", sensible->solde);
+}
+
+// Mise à jour du fichier après une opération
+void mise_a_jour_fichier(info_s *sensible, info_p *perso) {
+    FILE *fichier_banque_confidentiel = fopen("BANK", "r+");
+    if (fichier_banque_confidentiel == NULL) {
+        printf("Erreur lors de l'ouverture du fichier !\n");
+        return;
+    }
+
+    char line[256];
+    long pos;
+    const char *format = "Nom: %*s , Prénom: %*s , Âge : %*d , Identification :%[^,], MDP : %[^,] , Solde : %lf\n";
+    while (fgets(line, sizeof(line), fichier_banque_confidentiel) != NULL) {
+        pos = ftell(fichier_banque_confidentiel);
+        char id[MAXCHARS], mdp[MAXCHARS];
+        double solde;
+
+        if (sscanf(line, format, id, mdp, &solde) == 3) {
+            if (strcmp(sensible->id, id) == 0 && strcmp(sensible->mdp, mdp) == 0) {
+                fseek(fichier_banque_confidentiel, pos - strlen(line), SEEK_SET);
+                fprintf(fichier_banque_confidentiel, "Nom: %s , Prénom: %s , Âge : %d , Identification :%s, MDP : %s , Solde : %.2lf\n",
+                        perso->nom, perso->prenom, perso->age, sensible->id, sensible->mdp, sensible->solde);
+                break;
+            }
+        }
+    }
+
+    fclose(fichier_banque_confidentiel);
 }

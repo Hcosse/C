@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+
 int main() {
     int choix;
-    bool authenticated = false; // indique si l'utilisateur est authentifié
+    bool authenticated = false;
 
-    // allocation dynamique de la mémoire
     info_p *perso = malloc(sizeof(info_p));
     info_s *sensible = malloc(sizeof(info_s));
 
@@ -16,7 +16,6 @@ int main() {
         exit(1);
     }
 
-    // boucle principale
     do {
         printf("\n======= MENU BANQUE =======\n\n");
         printf("%d - AUTHENTIFICATION\n", AUTHENTIFICATION);
@@ -24,7 +23,7 @@ int main() {
         printf("%d - QUITTER\n", QUITTER);
         printf("\nSaisie du choix : ");
         scanf("%d", &choix);
-        while (getchar() != '\n'); // Nettoyage du buffer
+        while (getchar() != '\n');
 
         switch (choix) {
         case AUTHENTIFICATION:
@@ -34,12 +33,15 @@ int main() {
                     choix = menu_compte_user(choix);
                     switch (choix) {
                     case RETRAIT:
+                        retrait_compte(sensible);
+                        mise_a_jour_fichier(sensible, perso);
                         break;
                     case DEPOT:
+                        depot_compte(sensible);
+                        mise_a_jour_fichier(sensible, perso);
                         break;
                     case CONSULTATION_DU_SOLDE:
-                        break;
-                    case QUITTER:
+                        consultation(sensible);
                         break;
                     default:
                         printf("SAISIE INCORRECTE\n");
@@ -58,7 +60,6 @@ int main() {
         }
     } while (choix != QUITTER);
 
-    // libération de la mémoire allouée
     free(perso);
     free(sensible);
 

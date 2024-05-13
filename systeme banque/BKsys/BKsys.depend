@@ -1,15 +1,15 @@
 # depslib dependency file v1.0
-1713998684 source:c:\users\hugoc\onedrive\documents\ece b1\programmation c\projet\systeme banque\bksys\main.c
+1715637851 source:c:\users\hugoc\onedrive\documents\ece b1\programmation c\projet\systeme banque\bksys\main.c
 	"bk.h"
 	<string.h>
 	<stdlib.h>
 	<ctype.h>
 
-1713998477 c:\users\hugoc\onedrive\documents\ece b1\programmation c\projet\systeme banque\bksys\bk.h
+1715637825 c:\users\hugoc\onedrive\documents\ece b1\programmation c\projet\systeme banque\bksys\bk.h
 	<stdio.h>
 	<stdbool.h>
 
-1713998386 source:c:\users\hugoc\onedrive\documents\ece b1\programmation c\projet\systeme banque\bksys\bk.c
+1715637758 source:c:\users\hugoc\onedrive\documents\ece b1\programmation c\projet\systeme banque\bksys\bk.c
 	"bk.h"
 	<string.h>
 	<stdlib.h>

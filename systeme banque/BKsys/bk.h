@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-// declaration des constantes pour les options de menu
+// Déclaration des constantes pour les options de menu
 #define QUITTER 0
 #define AUTHENTIFICATION 1
 #define CREATION_DE_COMPTE 2
@@ -14,7 +14,7 @@
 #define MAXCHARS 100
 #define MAXTAB 100
 
-// structure pour les informations personnelles
+// Structure pour les informations personnelles
 typedef struct
 {
     char nom[MAXCHARS];
@@ -22,7 +22,7 @@ typedef struct
     int age;
 } info_p;
 
-// structure pour les informations sensibles
+// Structure pour les informations sensibles
 typedef struct
 {
     char id[MAXCHARS];
@@ -30,7 +30,7 @@ typedef struct
     double solde;
 } info_s;
 
-// prototypes de fonctions pour la gestion du compte bancaire
+// Prototypes de fonctions pour la gestion du compte bancaire
 int menu_compte_user(int choix);
 int entree_valide(const char *name);
 void saisieInfoPerso(info_p *perso);
@@ -40,5 +40,6 @@ bool authentification(info_s *sensible);
 void depot_compte(info_s *sensible);
 void retrait_compte(info_s *sensible);
 void consultation(info_s *sensible);
+void mise_a_jour_fichier(info_s *sensible, info_p *perso);
 
 #endif
